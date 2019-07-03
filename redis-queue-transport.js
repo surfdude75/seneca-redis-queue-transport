@@ -125,14 +125,14 @@ module.exports = function (options) {
           }
         })
       })
-
-      seneca.add('role:seneca, cmd:close', function (closeArgs, done) {
-        var closer = this
-        redisIn.quit()
-        redisOut.quit()
-        closer.prior(closeArgs, done)
-      })
     }
+    seneca.add('role:seneca, cmd:close', function (closeArgs, done) {
+      var closer = this
+      redisIn.end(true)
+      redisOut.end(true)
+      closer.prior(closeArgs, done)
+    })    
+    
   }
 
   function handleEvents (redisclient) {
